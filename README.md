@@ -1,1 +1,173 @@
-# Website
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+  transition: 0.3s;
+}
+
+header {
+  background: #1e293b;
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container {
+  padding: 20px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.card p {
+  font-size: 26px;
+  margin: 10px 0 0;
+  font-weight: bold;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+canvas {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #3b82f6;
+  color: white;
+}
+
+.dark-mode {
+  background: #0f172a;
+  color: white;
+}
+
+.dark-mode .card,
+.dark-mode canvas {
+  background: #1e293b;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h2>Analytics Dashboard</h2>
+  <button onclick="toggleMode()">Toggle Dark Mode</button>
+</header>
+
+<div class="container">
+
+  <div class="cards">
+    <div class="card">
+      <h3>Total Users</h3>
+      <p id="users">0</p>
+    </div>
+    <div class="card">
+      <h3>Revenue</h3>
+      <p id="revenue">$0</p>
+    </div>
+    <div class="card">
+      <h3>Conversions</h3>
+      <p id="conversions">0%</p>
+    </div>
+    <div class="card">
+      <h3>Growth</h3>
+      <p id="growth">0%</p>
+    </div>
+  </div>
+
+  <div class="charts">
+    <canvas id="lineChart"></canvas>
+    <canvas id="barChart"></canvas>
+  </div>
+
+</div>
+
+<script>
+// Sample Data
+const usersData = [120, 190, 300, 500, 200, 300, 450];
+const revenueData = [500, 700, 800, 1500, 1200, 1800, 2000];
+
+// Update KPI Cards
+document.getElementById("users").innerText = usersData.reduce((a,b)=>a+b);
+document.getElementById("revenue").innerText = "$" + revenueData.reduce((a,b)=>a+b);
+document.getElementById("conversions").innerText = "4.5%";
+document.getElementById("growth").innerText = "12%";
+
+// Line Chart
+new Chart(document.getElementById("lineChart"), {
+  type: "line",
+  data: {
+    labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+    datasets: [{
+      label: "Users",
+      data: usersData,
+      borderColor: "#3b82f6",
+      backgroundColor: "rgba(59,130,246,0.2)",
+      fill: true,
+      tension: 0.4
+    }]
+  }
+});
+
+// Bar Chart
+new Chart(document.getElementById("barChart"), {
+  type: "bar",
+  data: {
+    labels: ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+    datasets: [{
+      label: "Revenue",
+      data: revenueData,
+      backgroundColor: "#10b981"
+    }]
+  }
+});
+
+// Dark Mode Toggle
+function toggleMode() {
+  document.body.classList.toggle("dark-mode");
+}
+</script>
+
+</body>
+</html>
